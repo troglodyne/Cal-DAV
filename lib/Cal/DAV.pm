@@ -5,7 +5,7 @@ use strict;
 use Data::ICal;
 use HTTP::DAV;
 
-our $VERSION="0.5";
+our $VERSION="0.6";
 
 =head1 NAME
 
@@ -16,8 +16,8 @@ Cal::DAV - a CalDAV client
     my $cal = Cal::DAV->new( user => $user, pass => $pass, url => $url);
     # the ics data will be fetched automatically if it's there
 
-    # ... or you can load some ics 
-    $cal->load(filename => $data);
+    # ... or you can parse some ics 
+    $cal->parse(filename => $data);
 
     # cal now has all the methods of Data::ICal
     # you can now monkey around with the object
@@ -94,9 +94,9 @@ sub new {
     return bless { _dav => $dav, url => $args{url}, _auto_commit => $args{auto_commit} }, $class;
 }
 
-=head2 load <arg[s]>
+=head2 parse <arg[s]>
 
-Make a new calendar object using same arguments as C<Data::ICal>'s C<new()>.
+Make a new calendar object using same arguments as C<Data::ICal>'s C<new()> or C<parse()> methods.
 
 Does not auto save for you.
 
@@ -104,15 +104,14 @@ Returns 1 on success and 0 on failure.
 
 =cut
 
-sub load {
+sub parse {
     my $self = shift;
     my %args = @_;
-    $self->{_cal} = eval { Data::ICal->new(%args) };
-    return (!defined $@ && defined $self->{_cal}) ?
+    $self->{_cal} = Data::ICal->new(%args);
+    return (defined $self->{_cal}) ?
         $self->dav->ok("Loaded data successfully") :
         $self->dav->err('ERR_GENERIC', "Failed to load calendar: parse error $@");        
 }
-
 
 =head2 save [url]
 
@@ -189,7 +188,7 @@ sub get {
     }
     my $data = $res->get_content();
     return $self->dav->err('ERR_GENERIC', "Couldn't get data from $url", $url) unless defined $data;
-    return $self->load(data => $data);
+    return $self->parse(data => $data);
 }
 
 =head2 lock 

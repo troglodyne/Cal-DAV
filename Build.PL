@@ -10,6 +10,7 @@ my $build = Module::Build
                           'HTTP::DAV'      => '0.31',
                           'LWP'            => '5.808',
                         },
+         scripts     => [],
          create_makefile_pl => 'traditional',
        );
 

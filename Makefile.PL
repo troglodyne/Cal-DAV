@@ -11,9 +11,7 @@ WriteMakefile
                            'Test::More' => '0.62'
                          },
           'INSTALLDIRS' => 'site',
-          'EXE_FILES' => [
-                           '/usr/home/simon/projects/perl/Cal-DAV/bin/caldav'
-                         ],
+          'EXE_FILES' => [],
           'PL_FILES' => {}
         )
 ;

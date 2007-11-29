@@ -11,13 +11,13 @@ for (qw(CAL_DAV_USER CAL_DAV_PASS CAL_DAV_URL_BASE)) {
         plan skip_all => "Need to provide a $_ environment variable";
     }
 }
-plan tests => 6;
+plan tests => 5;
 
 my $cal;
 ok($cal = get_cal_dav('new.ics', 1), "Instantiated ok");
 
-# Load
-ok($cal->load(filename => 't/ics/new.ics'), "Loaded a file");
+# Parse
+ok($cal->parse(filename => 't/ics/new.ics'), "Parsed a file");
 
 # Destroy
 $cal = undef;

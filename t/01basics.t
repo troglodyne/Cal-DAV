@@ -19,8 +19,8 @@ plan tests => 14;
 my $cal;
 ok($cal = get_cal_dav('birthday.ics'), "Instantiated ok");
 
-# Load
-ok($cal->load(filename => 't/ics/birthdays.ics'), "Loaded a file");
+# Parse
+ok($cal->parse(filename => 't/ics/birthdays.ics'), "Parsed a file");
 
 # Save
 ok($cal->save, "Saved");

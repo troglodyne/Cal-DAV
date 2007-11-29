@@ -14,10 +14,10 @@ for (qw(CAL_DAV_USER CAL_DAV_PASS CAL_DAV_URL_BASE)) {
 plan tests => 11;
 
 
-# Load
+# Parse
 my $cal;
 ok($cal = get_cal_dav('birthday.ics'), "Instantiated ok");
-ok($cal->load(filename => 't/ics/birthdays.ics'), "Loaded a file");
+ok($cal->parse(filename => 't/ics/birthdays.ics'), "Parsed a file");
 
 # Put
 ok($cal->save, "Put");
