@@ -135,7 +135,7 @@ sub save {
         #$self->{_fetched} = 1;
     #}
     my $data = $cal->as_string;
-    my $ret  = $res->put($data);
+    my $ret  = $res->put($data, { 'content-type' => 'text/calendar' } );
 
     if ($ret->is_success) {
          return $self->dav->ok( "put $url (" . length($data) ." bytes)",$url );
